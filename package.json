@@ -1,0 +1,8 @@
+{
+  "name": "receitas-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Fantasma-no-Sistema/receitas-api.git",
+  "author": "brunocesarangst <bruno.angst@rede.ulbra.br>",
+  "license": "MIT"
+}
