@@ -4,5 +4,15 @@
   "main": "index.js",
   "repository": "https://github.com/Fantasma-no-Sistema/receitas-api.git",
   "author": "brunocesarangst <bruno.angst@rede.ulbra.br>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon ./src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
 }
