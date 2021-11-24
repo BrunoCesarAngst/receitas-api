@@ -1,10 +1,19 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { MongooseModule } from '@nestjs/mongoose';
+import { MulterModule } from '@nestjs/platform-express';
+import { ReceitasModule } from './receitas/receitas.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    MongooseModule.forRoot(
+      'mongodb+srv://dbuser:dbuser@cluster0.sv15c.mongodb.net/receitasApp',
+    ),
+    MulterModule.register({
+      dest: './fotos',
+    }),
+    ReceitasModule,
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

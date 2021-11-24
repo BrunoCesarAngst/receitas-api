@@ -1,0 +1,5 @@
+{
+  "instantMongo": {
+    "connections": [{ "name": "receitas", "uri": "mongodb+srv://dbuser:dbuser@cluster0.sv15c.mongodb.net/test" }]
+  }
+}
