@@ -6,19 +6,17 @@ import {
   Patch,
   Param,
   Delete,
-  UseInterceptors,
   Res,
+  UseInterceptors,
+  UploadedFiles,
   UploadedFile,
-  HttpStatus,
-  Req,
 } from '@nestjs/common';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { editFileName, imageFileFilter } from '../utils/file-update.utils';
 import { ReceitasService } from './receitas.service';
 import { CreateReceitaDto } from './dto/create-receita.dto';
 import { UpdateReceitaDto } from './dto/update-receita.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
-
 @Controller('receitas')
 export class ReceitasController {
   constructor(private readonly receitasService: ReceitasService) {}
@@ -48,30 +46,48 @@ export class ReceitasController {
     return this.receitasService.remove(id);
   }
 
-  @Post('/uploadFile')
-  @UseInterceptors(
-    FileInterceptor('foto', {
-      storage: diskStorage({
-        destination: './files',
-        filename: (req, file, cb) => {
-          const randomName = Array(32)
-            .fill(null)
-            .map(() => Math.round(Math.random() * 16).toString(16))
-            .join('');
-          return cb(null, `${randomName}${extname(file.originalname)}`);
-        },
-      }),
-    }),
-  )
-  uploadFile(@Res() res, @Req() req, @UploadedFile() file) {
-    return res.status(HttpStatus.OK).json({
-      success: true,
-      data: file,
-    });
-  }
+  // @Post('image')
+  // @UseInterceptors(
+  //   FileInterceptor('image', {
+  //     storage: diskStorage({
+  //       destination: './files',
+  //       filename: editFileName,
+  //     }),
+  //     fileFilter: imageFileFilter,
+  //   }),
+  // )
+  // async uploadedFile(@UploadedFile() file) {
+  //   const response = {
+  //     originalname: file.originalname,
+  //     filename: file.filename,
+  //   };
+  //   return response;
+  // }
 
-  @Get(':foto')
-  getFile(@Param('foto') foto, @Res() res) {
-    return res.sendFile(foto, { root: 'files' });
-  }
+  // @Post('multiple')
+  // @UseInterceptors(
+  //   FilesInterceptor('image', 20, {
+  //     storage: diskStorage({
+  //       destination: './files',
+  //       filename: editFileName,
+  //     }),
+  //     fileFilter: imageFileFilter,
+  //   }),
+  // )
+  // async uploadMultipleFiles(@UploadedFiles() files) {
+  //   const response = [];
+  //   files.forEach((file) => {
+  //     const fileResponse = {
+  //       originalname: file.originalname,
+  //       filename: file.filename,
+  //     };
+  //     response.push(fileResponse);
+  //   });
+  //   return response;
+  // }
+
+  // @Get(':imgpath')
+  // seeUploadedFile(@Param('imgpath') image, @Res() res) {
+  //   return res.sendFile(image, { root: './files' });
+  // }
 }
